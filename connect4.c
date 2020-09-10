@@ -3,7 +3,7 @@
 
 
 #define H 6
-#define W 12
+#define W 7
 
 
 
@@ -16,7 +16,7 @@
 #define CYAN    "\x1b[36m"
 
 
-int grid[H][W] = {{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}};
+int grid[H][W] = {{}};
 int finish = 0;
 int turn = 0;
 int column, row;
@@ -24,7 +24,13 @@ int column, row;
 //------------------------------------------------------------------------------
 
 void display() {
-        printf(" 1  2  3  4  5  6  7 \n");
+
+        for (int w=1; w<=W; w++) {
+                printf(" %d ", w);
+        }
+
+        printf("\n");
+
         for (int h=0; h<H; h++) {
                 for (int w=0; w<W; w++) {
                         if (grid[h][w] == 0) {
