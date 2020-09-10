@@ -7,13 +7,18 @@
 
 
 
-#define RESET   "\x1b[0m"
-#define RED     "\x1b[31m"
-#define GREEN   "\x1b[32m"
-#define BLUE    "\x1b[34m"
-#define YELLOW  "\x1b[33m"
-#define MAGENTA "\x1b[35m"
-#define CYAN    "\x1b[36m"
+#define RESET   "\x1b[0;0m"
+#define BLACK   "\x1b[0;30m"
+#define RED     "\x1b[0;31m"
+#define GREEN   "\x1b[0;32m"
+#define YELLOW  "\x1b[0;33m"
+#define BLUE    "\x1b[0;34m"
+#define MAGENTA "\x1b[0;35m"
+#define CYAN    "\x1b[0;36m"
+#define WHITE   "\x1b[0;37m"
+#define REDBLUE         "\x1b[1;31;44m"
+#define YELLOWBLUE      "\x1b[1;33;44m"
+#define BLUEBLUE        "\x1b[1;34;44m"
 
 
 int grid[H][W] = {{}};
@@ -36,9 +41,9 @@ void display() {
                         if (grid[h][w] == 0) {
                                 printf(BLUE "| |"RESET);
                         } else if (grid[h][w] == 1) {
-                                printf(BLUE "|"RED "O"BLUE "|"RESET);
+                                printf(BLUE "|"RED "●"BLUE "|"RESET);
                         } else if (grid[h][w] == 2) {
-                                printf(BLUE "|"YELLOW "O"BLUE "|"RESET);
+                                printf(BLUE "|"YELLOW "●"BLUE "|"RESET);
                         } else {
                                 printf(BLUE "|"GREEN "?"BLUE "|"RESET);
                         }
@@ -96,7 +101,7 @@ void draw() {
                         return;
                 }
         }
-        finish = 1;
+        finish = 2;
 }
 
 //------------------------------------------------------------------------------
@@ -183,8 +188,6 @@ void check() {
 
 int main() {
 
-        printf("\nSTART\n\n");
-
         while (finish == 0) {
                 printf("\n\n");
                 printf("turn: %d\n", turn);
@@ -201,8 +204,23 @@ int main() {
         printf("turn: %d\n", turn);
         display();
 
-        printf("\n\nEND\n");
+        
+
+        if (finish == 1) {
+                printf("\n\nGana: ");
+                if (turn%2 == 0) {
+                        printf(YELLOW"●"RESET"\n");
+                } else {
+                        printf(RED"●"RESET"\n");
+                }
+        } else if (finish == 2) {
+                printf("\n\nEmpate\n");
+        }
+
 
         return 0;
 
 }
+
+//gcc connect4.c -o connect4; ./connect4
+//gcc connect4.c -o connect4; .\connect4.exe
