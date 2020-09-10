@@ -46,15 +46,15 @@ void display() {
 void input() {
 
         column = -1;
-        printf("Seleccione una columna:");
-        fflush(stdin);
+        printf("Seleccione una columna: ");
         scanf("%d", &column);
         scanf("%*[^\n]");
         column--;
 
         while (column<0 || column>=W || grid[0][column]!=0) {
-                printf("Inserte un valor válido:");
-                fflush(stdin);
+                if (grid[0][column]!=0) printf("Columna llena, seleccione una columna vacía: ");
+                else                    printf("Inserte un valor válido: ");
+
                 scanf("%d", &column);
                 scanf("%*[^\n]");
                 column--;
