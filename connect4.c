@@ -3,7 +3,7 @@
 
 
 #define H 6
-#define W 7
+#define W 12
 
 
 
@@ -45,15 +45,18 @@ void display() {
 
 void input() {
 
+        column = -1;
         printf("Seleccione una columna:");
         fflush(stdin);
         scanf("%d", &column);
+        scanf("%*[^\n]");
         column--;
 
         while (column<0 || column>=W || grid[0][column]!=0) {
                 printf("Inserte un valor válido:");
                 fflush(stdin);
                 scanf("%d", &column);
+                scanf("%*[^\n]");
                 column--;
         }
 
