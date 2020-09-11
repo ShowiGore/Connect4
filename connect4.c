@@ -16,9 +16,8 @@
 #define MAGENTA "\x1b[0;35m"
 #define CYAN    "\x1b[0;36m"
 #define WHITE   "\x1b[0;37m"
-#define REDBLUE         "\x1b[1;31;44m"
-#define YELLOWBLUE      "\x1b[1;33;44m"
-#define BLUEBLUE        "\x1b[1;34;44m"
+#define REDCYAN         "\x1b[1;31;46m"
+#define YELLOWCYAN       "\x1b[1;33;46m"
 
 
 int grid[H][W] = {{}};
@@ -41,9 +40,13 @@ void display() {
                         if (grid[h][w] == 0) {
                                 printf(BLUE "| |"RESET);
                         } else if (grid[h][w] == 1) {
-                                printf(BLUE "|"RED "O"BLUE "|"RESET);
+                                printf(BLUE "|"RED"O"BLUE "|"RESET);
                         } else if (grid[h][w] == 2) {
-                                printf(BLUE "|"YELLOW "O"BLUE "|"RESET);
+                                printf(BLUE "|"YELLOW"O"BLUE "|"RESET);
+                        } else if (grid[h][w] == 3) {
+                                printf(BLUE "|"REDCYAN"O"BLUE "|"RESET);
+                        } else if (grid[h][w] == 4) {
+                                printf(BLUE "|"YELLOWCYAN"O"BLUE "|"RESET);
                         } else {
                                 printf(BLUE "|"GREEN "?"BLUE "|"RESET);
                         }
@@ -172,16 +175,111 @@ int upright() {
         return count;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
+void markdown() {
+        int i = row+1;
+        while (i<H && grid[row][column]==grid[i][column]) {
+                grid[i][column] = grid[i][column]+2;
+                i++;
+        }
+}
+
+void markleft() {
+        int j = column-1;
+        while (j>=0 && grid[row][column]==grid[row][j]) {
+                grid[row][j] = grid[row][j]+2;
+                j--;
+        }
+}
+
+void markright() {
+        int j = column+1;
+        while (j<W && grid[row][column]==grid[row][j]) {
+                grid[row][j] = grid[row][j]+2;
+                j++;
+        }
+}
+
+void markupleft() {
+        int i = row-1, j = column-1;
+        while (i>=0 && j>=0 && grid[row][column]==grid[i][j]) {
+                grid[i][j] = grid[i][j]+2;
+                i--;
+                j--;
+        }
+}
+
+void markdownright() {
+        int i = row+1, j = column+1;
+        while (i<H && j<W && grid[row][column]==grid[i][j]) {
+                grid[i][j] = grid[i][j]+2;
+                i++;
+                j++;
+        }
+}
+
+void markdownleft() {
+        int i = row+1, j = column-1;
+        while (i<H && j>=0 && grid[row][column]==grid[i][j]) {
+                grid[i][j] = grid[i][j]+2;
+                i++;
+                j--;
+        }
+}
+
+void markupright() {
+        int i = row-1, j = column+1;
+        while (i>=0 && j<W && grid[row][column]==grid[i][j]) {
+                grid[i][j] = grid[i][j]+2;
+                i--;
+                j++;
+        }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void check() {
 
-        if ( ((1+down()) >= 4) || ((left()+1+right()) >= 4) || ((upleft()+1+downright()) >= 4) || ((downleft()+1+upright())>=4) ) {
+        if ((1+down()) >= 4) {
+                markdown();
+                grid[row][column] = grid[row][column]+2;
                 finish = 1;
-                return;
+
         }
 
-        draw();
+        if ((left()+1+right()) >= 4) {
+                markleft();
+                markright();
+                grid[row][column] = grid[row][column]+2;
+                finish = 1;
+        }
+
+        if ((upleft()+1+downright()) >= 4) {
+                markupleft();
+                markdownright();
+                grid[row][column] = grid[row][column]+2;
+                finish = 1;
+        }
+
+        if ((downleft()+1+upright())>=4) {
+                markdownleft();
+                markupright();
+                grid[row][column] = grid[row][column]+2;
+                finish = 1;
+        }
+
+        if (finish == 1) {
+                return;
+        } else {
+                draw();
+        }
 
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
