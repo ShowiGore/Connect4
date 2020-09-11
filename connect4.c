@@ -243,7 +243,6 @@ void check() {
 
         if ((1+down()) >= 4) {
                 markdown();
-                grid[row][column] = grid[row][column]+2;
                 finish = 1;
 
         }
@@ -251,25 +250,23 @@ void check() {
         if ((left()+1+right()) >= 4) {
                 markleft();
                 markright();
-                grid[row][column] = grid[row][column]+2;
                 finish = 1;
         }
 
         if ((upleft()+1+downright()) >= 4) {
                 markupleft();
                 markdownright();
-                grid[row][column] = grid[row][column]+2;
                 finish = 1;
         }
 
         if ((downleft()+1+upright())>=4) {
                 markdownleft();
                 markupright();
-                grid[row][column] = grid[row][column]+2;
                 finish = 1;
         }
 
         if (finish == 1) {
+                grid[row][column] = grid[row][column]+2;
                 return;
         } else {
                 draw();
