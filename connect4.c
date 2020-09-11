@@ -7,17 +7,17 @@
 
 
 
-#define RESET   "\x1b[0;0m"
-#define BLACK   "\x1b[0;30m"
-#define RED     "\x1b[0;31m"
-#define GREEN   "\x1b[0;32m"
-#define YELLOW  "\x1b[0;33m"
-#define BLUE    "\x1b[0;34m"
-#define MAGENTA "\x1b[0;35m"
-#define CYAN    "\x1b[0;36m"
-#define WHITE   "\x1b[0;37m"
-#define REDCYAN         "\x1b[1;31;46m"
-#define YELLOWCYAN       "\x1b[1;33;46m"
+#define RESET   "\e[0m"
+#define BLACK   "\e[0;30m"
+#define RED     "\e[0;31m"
+#define GREEN   "\e[0;32m"
+#define YELLOW  "\e[0;33m"
+#define BLUE    "\e[0;34m"
+#define MAGENTA "\e[0;35m"
+#define CYAN    "\e[0;36m"
+#define WHITE   "\e[0;37m"
+#define RED_M     "\e[0;31;7;5m"
+#define YELLOW_M  "\e[0;33;7;5m"
 
 
 int grid[H][W] = {{}};
@@ -38,17 +38,17 @@ void display() {
         for (int h=0; h<H; h++) {
                 for (int w=0; w<W; w++) {
                         if (grid[h][w] == 0) {
-                                printf(BLUE "| |"RESET);
+                                printf(BLUE"| |"RESET);
                         } else if (grid[h][w] == 1) {
-                                printf(BLUE "|"RED"O"BLUE "|"RESET);
+                                printf(BLUE"|"RED"O"BLUE"|"RESET);
                         } else if (grid[h][w] == 2) {
-                                printf(BLUE "|"YELLOW"O"BLUE "|"RESET);
+                                printf(BLUE"|"YELLOW"O"BLUE"|"RESET);
                         } else if (grid[h][w] == 3) {
-                                printf(BLUE "|"REDCYAN"O"BLUE "|"RESET);
+                                printf(BLUE"|"RED_M"O"BLUE"|"RESET);
                         } else if (grid[h][w] == 4) {
-                                printf(BLUE "|"YELLOWCYAN"O"BLUE "|"RESET);
+                                printf(BLUE"|"YELLOW_M"O"BLUE"|"RESET);
                         } else {
-                                printf(BLUE "|"GREEN "?"BLUE "|"RESET);
+                                printf(BLUE"|"GREEN"?"BLUE"|"RESET);
                         }
                 }
                 printf("\n");
