@@ -60,15 +60,15 @@ void display() {
 void input() {
 
         column = -1;
-        printf("Seleccione una columna: ");
+        printf("Select a column: ");
         scanf("%d", &column);
         scanf("%*[^\n]");
         column--;
 
         while (column<0 || column>=W || grid[0][column]!=0) {
                 printf("\033[1A\033[K");
-                if (grid[0][column]!=0) printf("Columna llena, seleccione una columna vacía: ");
-                else                    printf("Inserte un valor válido: ");
+                if (grid[0][column]!=0) printf("Full column, select an empry tile: ");
+                else                    printf("Insert a valid value: ");
 
                 scanf("%d", &column);
                 scanf("%*[^\n]");
@@ -281,18 +281,18 @@ void check() {
 ////////////////////////////////////////////////////////////////////////////////
 
 void end() {
-        printf("turn: %d\n", turn);
+        printf("Round: %d\n", turn);
         display();
-
+        printf("\n\n");
         if (finish == 1) {
-                printf("\n\nGana: ");
                 if (turn%2 == 0) {
-                        printf(YELLOW"O"RESET"\n");
+                        printf(YELLOW"O"RESET);
                 } else {
-                        printf(RED"O"RESET"\n");
+                        printf(RED"O"RESET);
                 }
+                printf(" WINS\n");
         } else if (finish == 2) {
-                printf("\n\nEmpate\n");
+                printf("DRAW\n");
         }
         printf("\a");//beep
 
@@ -304,7 +304,7 @@ int main() {
         printf("\033[2J");//clear
 
         while (finish == 0) {
-                printf("turn: %d\n", turn);
+                printf("Round: %d\n", turn);
                 display();
 
                 input();
