@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+#define C 4
 #define H 6
 #define W 7
 
@@ -241,25 +241,25 @@ void markupright() {
 
 void check() {
 
-        if ((1+down()) >= 4) {
+        if ((1+down()) >= C) {
                 markdown();
                 finish = 1;
 
         }
 
-        if ((left()+1+right()) >= 4) {
+        if ((left()+1+right()) >= C) {
                 markleft();
                 markright();
                 finish = 1;
         }
 
-        if ((upleft()+1+downright()) >= 4) {
+        if ((upleft()+1+downright()) >= C) {
                 markupleft();
                 markdownright();
                 finish = 1;
         }
 
-        if ((downleft()+1+upright())>=4) {
+        if ((downleft()+1+upright()) >= C) {
                 markdownleft();
                 markupright();
                 finish = 1;
