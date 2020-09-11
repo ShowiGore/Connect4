@@ -60,17 +60,17 @@ void input() {
         printf("Seleccione una columna: ");
         scanf("%d", &column);
         scanf("%*[^\n]");
-        
-        while (column<=0 || column>W || grid[0][column]!=0) {
+        column--;
+
+        while (column<0 || column>=W || grid[0][column]!=0) {
                 printf("\033[1A\033[K");
                 if (grid[0][column]!=0) printf("Columna llena, seleccione una columna vacía: ");
                 else                    printf("Inserte un valor válido: ");
 
                 scanf("%d", &column);
                 scanf("%*[^\n]");
+                column--;
         }
-
-        column--;
 
 }
 
@@ -190,21 +190,24 @@ void end() {
         display();
 
         if (finish == 1) {
-                printf("\a\n\nGana: ");
+                printf("\n\nGana: ");
                 if (turn%2 == 0) {
                         printf(YELLOW"O"RESET"\n");
                 } else {
                         printf(RED"O"RESET"\n");
                 }
         } else if (finish == 2) {
-                printf("\a\a\nEmpate\n");
+                printf("\n\nEmpate\n");
         }
+        printf("\a");//beep
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-        
+        printf("\033[2J");//clear
+
         while (finish == 0) {
                 printf("turn: %d\n", turn);
                 display();
@@ -213,7 +216,7 @@ int main() {
                 insert();
                 check();
 
-                printf("\033[2J");
+                printf("\033[2J");//clear
 
                 turn++;
         }
