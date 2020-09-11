@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define C 4
 #define H 6
@@ -27,13 +28,17 @@ int column, row;
 
 ////////////////////////////////////////////////////////////////////////////////
 
+int digits(int number) {
+        return (number==0) ? 1 : (log10(number)+1);
+}
+
+int digit(int number, int digit) {
+        return (number / (int) pow(10,digit-1)) % 10;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void display() {
-
-        for (int w=1; w<=W; w++) {
-                printf(" %d ", w);
-        }
-
-        printf("\n");
 
         for (int h=0; h<H; h++) {
                 for (int w=0; w<W; w++) {
@@ -50,6 +55,19 @@ void display() {
                         } else {
                                 printf(BLUE"|"GREEN"?"BLUE"|"RESET);
                         }
+                }
+                printf("\n");
+        }
+
+        //enumeration string should be constructed only once
+        for (int d=0; d<digits(W); d++) {
+                for (int w=1; w<=W; w++) {
+                        if (digits(w)>=d+1) {
+                                printf(" %d ", digit(w,digits(w)-d));
+                        } else {
+                                printf("   ");
+                        }
+                        
                 }
                 printf("\n");
         }
