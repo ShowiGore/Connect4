@@ -26,7 +26,7 @@ int finish = 0;
 int turn = 0;
 int column, row;
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 void display() {
 
@@ -41,9 +41,9 @@ void display() {
                         if (grid[h][w] == 0) {
                                 printf(BLUE "| |"RESET);
                         } else if (grid[h][w] == 1) {
-                                printf(BLUE "|"RED "●"BLUE "|"RESET);
+                                printf(BLUE "|"RED "O"BLUE "|"RESET);
                         } else if (grid[h][w] == 2) {
-                                printf(BLUE "|"YELLOW "●"BLUE "|"RESET);
+                                printf(BLUE "|"YELLOW "O"BLUE "|"RESET);
                         } else {
                                 printf(BLUE "|"GREEN "?"BLUE "|"RESET);
                         }
@@ -52,7 +52,7 @@ void display() {
         }
 }
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 void input() {
 
@@ -60,22 +60,21 @@ void input() {
         printf("Seleccione una columna: ");
         scanf("%d", &column);
         scanf("%*[^\n]");
-        column--;
-
-        while (column<0 || column>=W || grid[0][column]!=0) {
+        
+        while (column<=0 || column>W || grid[0][column]!=0) {
+                printf("\033[1A\033[K");
                 if (grid[0][column]!=0) printf("Columna llena, seleccione una columna vacía: ");
                 else                    printf("Inserte un valor válido: ");
 
                 scanf("%d", &column);
                 scanf("%*[^\n]");
-                column--;
         }
 
-
+        column--;
 
 }
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 void insert() {
         int i = H-1;
@@ -93,7 +92,7 @@ void insert() {
 
 }
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 void draw() {
         for (int w=0; w<W; w++) {
@@ -104,7 +103,7 @@ void draw() {
         finish = 2;
 }
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
 
 int down() {
         int i = row+1, count=0;
@@ -184,12 +183,29 @@ void check() {
 
 }
 
-//------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+
+void end() {
+        printf("turn: %d\n", turn);
+        display();
+
+        if (finish == 1) {
+                printf("\a\n\nGana: ");
+                if (turn%2 == 0) {
+                        printf(YELLOW"O"RESET"\n");
+                } else {
+                        printf(RED"O"RESET"\n");
+                }
+        } else if (finish == 2) {
+                printf("\a\a\nEmpate\n");
+        }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-
+        
         while (finish == 0) {
-                printf("\n\n");
                 printf("turn: %d\n", turn);
                 display();
 
@@ -197,26 +213,12 @@ int main() {
                 insert();
                 check();
 
+                printf("\033[2J");
+
                 turn++;
         }
 
-        printf("\n\n");
-        printf("turn: %d\n", turn);
-        display();
-
-        
-
-        if (finish == 1) {
-                printf("\n\nGana: ");
-                if (turn%2 == 0) {
-                        printf(YELLOW"●"RESET"\n");
-                } else {
-                        printf(RED"●"RESET"\n");
-                }
-        } else if (finish == 2) {
-                printf("\n\nEmpate\n");
-        }
-
+        end();
 
         return 0;
 
