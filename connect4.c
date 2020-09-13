@@ -29,11 +29,11 @@ int column, row;
 ////////////////////////////////////////////////////////////////////////////////
 
 int digits(int number) {
-        return (number==0) ? 1 : (log10(number)+1);
+        return (number==0) ? 1 : ((int) log10((double) number)+1);
 }
 
 int digit(int number, int digit) {
-        return (number / (int) pow(10,digit-1)) % 10;
+        return (number / (int) pow(10, (double) (digit-1)) ) % 10;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ void display() {
                         } else {
                                 printf("   ");
                         }
-                        
+
                 }
                 printf("\n");
         }
