@@ -5,13 +5,15 @@
 #include <string.h>
 #include <sys/socket.h>
 #define MAX 80
-#define PORT 8080
+#define PORT 6466
 #define SA struct sockaddr
+
 void func(int sockfd)
 {
     char buff[MAX];
     int n;
-    for (;;) {
+    for (;;) 
+    {
         bzero(buff, sizeof(buff));
         printf("Enter the string : ");
         n = 0;

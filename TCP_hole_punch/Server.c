@@ -18,7 +18,7 @@ void func(int sockfd)
     // infinite loop for chat
     for (;;) {
         bzero(buff, MAX);
-
+        printf("hola\n");
         // read the message from client and copy it in buffer
         read(sockfd, buff, sizeof(buff));
         // print buffer which contains the client contents
