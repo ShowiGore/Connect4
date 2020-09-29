@@ -1,5 +1,7 @@
 import re
 import sys
+from typing import List
+
 
 class Colors:
     RESET = "\033[0m"
@@ -35,49 +37,65 @@ class Colors:
     WHITE_FG = "\033[0;37m"
 
 
-def applyArguments(n, h, w):
-    positiveInteger = re.compile('^[1-9]+[0-9]*$')
+def apply_arguments(n, h, w):
+    positive_integer = re.compile('^[1-9]+[0-9]*$')
     arguments = sys.argv
     arguments.remove(sys.argv[0])
     if len(arguments) == 1:
-        if positiveInteger.match(arguments[0]):
+        if positive_integer.match(arguments[0]):
             n = int(arguments[0])
     elif len(arguments) == 2:
-        if positiveInteger.match(arguments[0]) and \
-                positiveInteger.match(arguments[1]):
+        if positive_integer.match(arguments[0]) and \
+                positive_integer.match(arguments[1]):
             h = int(arguments[0])
             w = int(arguments[1])
     elif len(arguments) == 3:
-        if positiveInteger.match(arguments[0]) and \
-                positiveInteger.match(arguments[1]) and \
-                positiveInteger.match(arguments[2]):
+        if positive_integer.match(arguments[0]) and \
+                positive_integer.match(arguments[1]) and \
+                positive_integer.match(arguments[2]):
             n = int(arguments[0])
             h = int(arguments[1])
             w = int(arguments[2])
     return n, h, w
 
 
-def display(grid, enumeration):
+def display(grid, p):
     s = ""
     for h in range(len(grid)):
         for w in range(len(grid[h])):
             if grid[h][w] == 0:
-                s += Colors.BLUE_FG + "| |" + Colors.RESET
+                s += Colors.BLUE_FG + "| |" \
+                     + Colors.RESET
             elif grid[h][w] == 1:
-                s += Colors.BLUE_FG + "|" + Colors.RED_FG + "O" + Colors.BLUE_FG + "|" + Colors.RESET
+                s += Colors.BLUE_FG + "|" \
+                     + Colors.RED_FG + "O" \
+                     + Colors.BLUE_FG + "|" \
+                     + Colors.RESET
             elif grid[h][w] == 2:
-                s += Colors.BLUE_FG + "|" + Colors.YELLOW_FG + "O" + Colors.BLUE_FG + "|" + Colors.RESET
-            elif grid[h][w] == 3:
-                s += Colors.BLUE_FG + "|" + Colors.RED_FG + Colors.REVERSE + Colors.BLINK_SLOW + "O" + Colors.BLUE_FG + "|" + Colors.RESET
-            elif grid[h][w] == 4:
-                s += Colors.BLUE_FG + "|" + Colors.YELLOW_FG + Colors.REVERSE + Colors.BLINK_SLOW + "O" + Colors.BLUE_FG + "|" + Colors.RESET
+                s += Colors.BLUE_FG + "|" \
+                     + Colors.YELLOW_FG + "O" \
+                     + Colors.BLUE_FG + "|" \
+                     + Colors.RESET
+            elif grid[h][w] == (1 + p):
+                s += Colors.BLUE_FG + "|" \
+                     + Colors.RED_FG + Colors.REVERSE + "O" \
+                     + Colors.BLUE_FG + "|" \
+                     + Colors.RESET
+            elif grid[h][w] == (2 + p):
+                s += Colors.BLUE_FG + "|" \
+                     + Colors.YELLOW_FG + Colors.REVERSE + "O" \
+                     + Colors.BLUE_FG + "|" + \
+                     Colors.RESET
             else:
-                s += Colors.BLUE_FG + "|" + Colors.GREEN_FG + Colors.REVERSE + Colors.BLINK_SLOW + "?" + Colors.BLUE_FG + "|" + Colors.RESET
+                s += Colors.BLUE_FG + "|" \
+                     + Colors.GREEN_FG + Colors.REVERSE + "?" \
+                     + Colors.BLUE_FG + "|" + \
+                     Colors.RESET
         s += "\n"
-    print(s + enumeration)
+    return s
 
 
-def buildEnumeration(width):
+def build_enumeration(width):
     columns = [[d for d in str(x)] for x in range(1, width + 1)]
     s = ""
     for d in range(len(columns[width - 1])):
@@ -90,29 +108,47 @@ def buildEnumeration(width):
     return s
 
 
+def draw(grid):
+    for w in range(len(grid)):
+        if grid[0][w] == 0:
+            return False
+    return True
+
+
+def count_down(grid, row, column):
+    i = row + 1
+    count = 0
+    while i < len(grid) and grid[row][column] == grid[i][column]:
+        count += 1
+        i += 1
+    return count
+
+
 def main():
-    n = 4   # objective
-    h = 6   # grid height
-    w = 7   # grid width
-    n, h, w = applyArguments(n, h, w)
+    p = 2  # number of players
+    n = 4  # objective
+    h = 6  # grid height
+    w = 7  # grid width
+    n, h, w = apply_arguments(n, h, w)
 
     grid = [[0 for x in range(w)] for y in range(h)]
 
-    enumeration = buildEnumeration(w)
+    enumeration = build_enumeration(w)
 
+    '''
     grid[0][0] = 0
     grid[0][1] = 1
     grid[0][2] = 2
     grid[0][3] = 3
     grid[0][4] = 4
     grid[0][5] = 5
+    '''
 
-    display(grid, enumeration)
+    print(display(grid, p) + enumeration)
 
 
 if __name__ == "__main__":
     main()
-
 
 '''
 autopep8 --aggressive --in-place connectN.py
