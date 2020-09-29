@@ -1,6 +1,5 @@
 import re
 import sys
-from typing import List
 
 
 class Colors:
@@ -27,14 +26,14 @@ class Colors:
     REVEAL = "\033[28m"
     CROSSED_OFF = "\033[29m"
 
-    BLACK_FG = "\033[0;30m"
-    RED_FG = "\033[0;31m"
-    GREEN_FG = "\033[0;32m"
-    YELLOW_FG = "\033[0;33m"
-    BLUE_FG = "\033[0;34m"
-    MAGENTA_FG = "\033[0;35m"
-    CYAN_FG = "\033[0;36m"
-    WHITE_FG = "\033[0;37m"
+    BLACK_FG = "\033[030m"
+    RED_FG = "\033[031m"
+    GREEN_FG = "\033[032m"
+    YELLOW_FG = "\033[033m"
+    BLUE_FG = "\033[034m"
+    MAGENTA_FG = "\033[035m"
+    CYAN_FG = "\033[036m"
+    WHITE_FG = "\033[037m"
 
 
 def apply_arguments(n, h, w):
@@ -116,22 +115,133 @@ def draw(grid):
 
 
 def count_down(grid, row, column):
-    i = row + 1
-    count = 0
+    count, i = 0, row + 1
     while i < len(grid) and grid[row][column] == grid[i][column]:
         count += 1
         i += 1
     return count
 
 
+def count_left(grid, row, column):
+    count, j = 0, column - 1
+    while j >= 0 and grid[row][column] == grid[row][j]:
+        count += 1
+        j -= 1
+    return count
+
+
+def count_right(grid, row, column):
+    count, j = 0, column + 1
+    while j < len(grid[0]) and grid[row][column] == grid[row][j]:
+        count += 1
+        j += 1
+    return count
+
+
+def count_upleft(grid, row, column):
+    count, i, j = 0, row - 1, column - 1
+    while i >= 0 and j >= 0 and grid[row][column] == grid[i][j]:
+        count += 1
+        i -= 1
+        j -= 1
+    return count
+
+
+def count_downright(grid, row, column):
+    count, i, j = 0, row + 1, column + 1
+    while i < len(grid) and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+        count += 1
+        i += 1
+        j += 1
+    return count
+
+
+def count_downleft(grid, row, column):
+    count, i, j = 0, row + 1, column - 1
+    while i < len(grid) and j >= 0 and grid[row][column] == grid[i][j]:
+        count += 1
+        i += 1
+        j -= 1
+    return count
+
+
+def count_upright(grid, row, column):
+    count, i, j = 0, row - 1, column + 1
+    while i >= 0 and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+        count += 1
+        i -= 1
+        j += 1
+    return count
+
+
+def mark_down(grid, row, column):
+    i = row + 1
+    while i < len(grid) and grid[row][column] == grid[i][column]:
+        grid[i][column] = grid[i][column]+2
+        i += 1
+    return grid
+
+
+def mark_left(grid, row, column):
+    j = column - 1
+    while j >= 0 and grid[row][column] == grid[row][j]:
+        grid[row][j] = grid[row][j]+2
+        j -= 1
+    return grid
+
+
+def mark_right(grid, row, column):
+    j = column + 1
+    while j < len(grid[0]) and grid[row][column] == grid[row][j]:
+        grid[row][j] = grid[row][j]+2
+        j += 1
+
+
+def mark_upleft(grid, row, column):
+    i, j = row - 1, column - 1
+    while i >= 0 and j >= 0 and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j]+2
+        i -= 1
+        j -= 1
+    return grid
+
+
+def mark_downright(grid, row, column):
+    i, j = row + 1, column + 1
+    while i < len(grid) and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j]+2
+        i += 1
+        j += 1
+    return grid
+
+
+def mark_downleft(grid, row, column):
+    i, j = row + 1, column - 1
+    while i < len(grid) and j >= 0 and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j]+2
+        i += 1
+        j -= 1
+    return grid
+
+
+def mark_upright(grid, row, column):
+    i, j = row - 1, column + 1
+    while i >= 0 and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j]+2
+        i -= 1
+        j += 1
+    return grid
+
+
 def main():
-    p = 2  # number of players
-    n = 4  # objective
-    h = 6  # grid height
-    w = 7  # grid width
+    # number of players, objective, grid height, grid width
+    p, n, h, w = 2, 4, 6, 7
+
     n, h, w = apply_arguments(n, h, w)
 
-    grid = [[0 for x in range(w)] for y in range(h)]
+    grid = []
+    for y in range(h):
+        grid.append(([0] * w))
 
     enumeration = build_enumeration(w)
 
@@ -151,6 +261,6 @@ if __name__ == "__main__":
     main()
 
 '''
-autopep8 --aggressive --in-place connectN.py
+autopep8  -- 1aggressive  -- 1in-place connectN.py
 pycodestyle connectN.py
 '''
