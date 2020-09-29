@@ -116,7 +116,8 @@ def draw(grid):
 
 def count_down(grid, row, column):
     count, i = 0, row + 1
-    while i < len(grid) and grid[row][column] == grid[i][column]:
+    while i < len(grid) \
+            and grid[row][column] == grid[i][column]:
         count += 1
         i += 1
     return count
@@ -124,7 +125,8 @@ def count_down(grid, row, column):
 
 def count_left(grid, row, column):
     count, j = 0, column - 1
-    while j >= 0 and grid[row][column] == grid[row][j]:
+    while j >= 0 \
+            and grid[row][column] == grid[row][j]:
         count += 1
         j -= 1
     return count
@@ -132,7 +134,8 @@ def count_left(grid, row, column):
 
 def count_right(grid, row, column):
     count, j = 0, column + 1
-    while j < len(grid[0]) and grid[row][column] == grid[row][j]:
+    while j < len(grid[0]) \
+            and grid[row][column] == grid[row][j]:
         count += 1
         j += 1
     return count
@@ -140,7 +143,8 @@ def count_right(grid, row, column):
 
 def count_upleft(grid, row, column):
     count, i, j = 0, row - 1, column - 1
-    while i >= 0 and j >= 0 and grid[row][column] == grid[i][j]:
+    while i >= 0 and j >= 0 \
+            and grid[row][column] == grid[i][j]:
         count += 1
         i -= 1
         j -= 1
@@ -149,7 +153,8 @@ def count_upleft(grid, row, column):
 
 def count_downright(grid, row, column):
     count, i, j = 0, row + 1, column + 1
-    while i < len(grid) and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+    while i < len(grid) and j < len(grid[0]) \
+            and grid[row][column] == grid[i][j]:
         count += 1
         i += 1
         j += 1
@@ -158,7 +163,8 @@ def count_downright(grid, row, column):
 
 def count_downleft(grid, row, column):
     count, i, j = 0, row + 1, column - 1
-    while i < len(grid) and j >= 0 and grid[row][column] == grid[i][j]:
+    while i < len(grid) and j >= 0 \
+            and grid[row][column] == grid[i][j]:
         count += 1
         i += 1
         j -= 1
@@ -167,67 +173,75 @@ def count_downleft(grid, row, column):
 
 def count_upright(grid, row, column):
     count, i, j = 0, row - 1, column + 1
-    while i >= 0 and j < len(grid[0]) and grid[row][column] == grid[i][j]:
+    while i >= 0 and j < len(grid[0]) \
+            and grid[row][column] == grid[i][j]:
         count += 1
         i -= 1
         j += 1
     return count
 
 
-def mark_down(grid, row, column):
+def mark_down(p, grid, row, column):
     i = row + 1
-    while i < len(grid) and grid[row][column] == grid[i][column]:
-        grid[i][column] = grid[i][column]+2
+    while i < len(grid) \
+            and grid[row][column] == grid[i][column]:
+        grid[i][column] = grid[i][column] + p
         i += 1
     return grid
 
 
-def mark_left(grid, row, column):
+def mark_left(p, grid, row, column):
     j = column - 1
-    while j >= 0 and grid[row][column] == grid[row][j]:
-        grid[row][j] = grid[row][j]+2
+    while j >= 0 \
+            and grid[row][column] == grid[row][j]:
+        grid[row][j] = grid[row][j] + p
         j -= 1
     return grid
 
 
-def mark_right(grid, row, column):
+def mark_right(p, grid, row, column):
     j = column + 1
-    while j < len(grid[0]) and grid[row][column] == grid[row][j]:
-        grid[row][j] = grid[row][j]+2
+    while j < len(grid[0]) \
+            and grid[row][column] == grid[row][j]:
+        grid[row][j] = grid[row][j] + p
         j += 1
 
 
-def mark_upleft(grid, row, column):
+def mark_upleft(p, grid, row, column):
     i, j = row - 1, column - 1
-    while i >= 0 and j >= 0 and grid[row][column] == grid[i][j]:
-        grid[i][j] = grid[i][j]+2
+    while i >= 0 and j >= 0 \
+            and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j] + p
         i -= 1
         j -= 1
     return grid
 
 
-def mark_downright(grid, row, column):
+def mark_downright(p, grid, row, column):
     i, j = row + 1, column + 1
-    while i < len(grid) and j < len(grid[0]) and grid[row][column] == grid[i][j]:
-        grid[i][j] = grid[i][j]+2
+    while i < len(grid) and j < len(grid[0]) \
+            and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j] + p
         i += 1
         j += 1
     return grid
 
 
-def mark_downleft(grid, row, column):
+def mark_downleft(p, grid, row, column):
     i, j = row + 1, column - 1
-    while i < len(grid) and j >= 0 and grid[row][column] == grid[i][j]:
-        grid[i][j] = grid[i][j]+2
+    while i < len(grid) and j >= 0 \
+            and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j] + p
         i += 1
         j -= 1
     return grid
 
 
-def mark_upright(grid, row, column):
+def mark_upright(p, grid, row, column):
     i, j = row - 1, column + 1
-    while i >= 0 and j < len(grid[0]) and grid[row][column] == grid[i][j]:
-        grid[i][j] = grid[i][j]+2
+    while i >= 0 and j < len(grid[0]) \
+            and grid[row][column] == grid[i][j]:
+        grid[i][j] = grid[i][j] + p
         i -= 1
         j += 1
     return grid
